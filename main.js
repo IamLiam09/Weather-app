@@ -38,3 +38,24 @@ form.addEventListener("submit", (e) => {
 	}
     e.preventDefault()
 });
+function dayOfTheWeek(day, month, year){
+    const weekday = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+    ]
+    return weekday(new Date(`${day}/${month}/${year}`).getDay())
+}
+// fetch data from the weather ap
+async function fetchWeatherData(){
+    const data = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput}&APPID=7463cb2370bde42a561a9d93305df594`)
+    try{
+        const response = await 
+    }catch (err){
+
+    }
+}

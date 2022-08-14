@@ -45,17 +45,23 @@ h4{
 	justify-content: space-between;
 	align-items: flex-start;
 	flex-direction: column;
-	padding: 2em 3em 4em 3em;
+	padding: 2em 3em 4em 1em;
 }
-.container > div{
+.container .info{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-left: 10px;
+	position: absolute;
+	max-width: 300px;
+	width: 30%;
+	left: 7%;
+	bottom: 3%;
 }
 .city-time,
 .temp,
 .weather{
-	margin: 0 1em;
+	margin: 0 .5em;
 }
 .city-time h1{
 	margin: 0;
@@ -69,13 +75,6 @@ h4{
 .weather img{
 	display: block;
 	margin: 0.5em 0;
-}
-.info{
-	position: absolute;
-	max-width: 300px;
-	width: 30%;
-	left: 10%;
-	bottom: 3%;
 }
 .panel{
 	position: absolute;
@@ -155,7 +154,7 @@ h4{
 	.panel{
 		position: relative;
 		width: 100%;
-		/* top: initial; */
+		top: initial;
 	}
 	.container .info{
 		width: 10%;
@@ -164,19 +163,18 @@ h4{
 	}
 };
 @media (max-width: 600px){
-	html{
-		font-size: 2px;
-	}
-	.container{
+	/* .container{
 		position: relative;
 		margin: 0;
 		padding: 0;
-	}
+		display: block;
+	} */
 	.container .info{
-		/* width: 2%; */
+		display: grid;
+		grid-template-columns: .5fr 1fr;
 		position: absolute;
 		font-size: 3px;
-		left: 78%;
+		left: 78;
 		margin-left: 100px;
 	}
 } 
