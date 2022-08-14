@@ -11,6 +11,9 @@ h1,
 h3 {
 	font-weight: 400;
 }
+h4{
+	color: white;
+}
 .weather-app {
 	min-height: 100vh;
 	background-image: url(./images/Day/cloudy.jpg);
@@ -60,12 +63,19 @@ h3 {
 	font-size: 3em;
 }
 .temp{
-	font-size: 7em;
+	font-size: 7rem;
 	margin: 0;
 }
 .weather img{
 	display: block;
 	margin: 0.5em 0;
+}
+.info{
+	position: absolute;
+	max-width: 300px;
+	width: 30%;
+	left: 10%;
+	bottom: 3%;
 }
 .panel{
 	position: absolute;
@@ -141,16 +151,40 @@ h3 {
 	justify-content: space-between;
 	align-content: center;
 }
-@media screen and (max-width: 800px){
-	.panel, .container{
+@media (max-width: 800px){
+	.panel{
 		position: relative;
 		width: 100%;
-		top: initial;
+		/* top: initial; */
+	}
+	.container .info{
+		width: 10%;
+		position: absolute;
+		left: 28%;
 	}
 };
-@media screen and (max-width: 500px){
-	
-}
+@media (max-width: 600px){
+	html{
+		font-size: 2px;
+	}
+	.container{
+		position: relative;
+		margin: 0;
+		padding: 0;
+	}
+	.container .info{
+		/* width: 2%; */
+		position: absolute;
+		font-size: 3px;
+		left: 78%;
+		margin-left: 100px;
+	}
+} 
+@media (max-height: 300px){
+	.weather-app{
+		min-width: 20em;
+	}
+} 
 
 
 
