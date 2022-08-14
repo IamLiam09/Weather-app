@@ -33,29 +33,126 @@ form.addEventListener("submit", (e) => {
 		// change from default city to the one written  in the input field
 		cityInput = search.value;
 		fetchWeatherData();
-        search.value = ""
-        app.style.opacity = 0
+		search.value = "";
+		app.style.opacity = 0;
 	}
-    e.preventDefault()
+	e.preventDefault();
 });
-function dayOfTheWeek(day, month, year){
-    const weekday = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ]
-    return weekday(new Date(`${day}/${month}/${year}`).getDay())
+function dayOfTheWeek(day, month, year) {
+	const weekday = [
+		"Sunday",
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+	];
+	return weekday(new Date(`${day}/${month}/${year}`).getDay());
+}
+// Date and time function
+function displayingDate(value) {
+	d = new Date();
+	localtime = d.getTime();
+	localOffest = d.getTimezoneOffset() * 60000;
+	utc = localtime + localOffest;
+	var citytime = utc + 1000 * value.timezone;
+	nd = new Date(citytime);
+	return nd;
 }
 // fetch data from the weather ap
-async function fetchWeatherData(){
-    const data = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput}&APPID=7463cb2370bde42a561a9d93305df594`)
-    try{
-        const response = await 
-    }catch (err){
-
-    }
+async function fetchWeatherData() {
+	try {
+		const response = await fetch(
+			`http://api.weatherapi.com/v1/current.json?key=564ae05f335a4e2aa91141544221408&q=${cityInput}&aqi=yes`
+		);
+		const weatherData = await response.json();
+		console.log(weatherData);
+		// add this data to the container icon in html
+		temp.innerHTML = Math.floor(weatherData.current.temp_c) + "&#176;";
+		conditionOutput.innerHTML = weatherData.current.condition.text;
+		const date = weatherData.location.localtime;
+		const y = parseInt(date.substr(0, 4));
+		const m = parseInt(date.substr(5, 2));
+		const d = parseInt(date.substr(8, 2));
+		const time = date.substr(11);
+		dateOutput.innerHTML = `${dayOfTheWeek(d, m, y)} ${d}, ${m}, ${y}}`;
+		timeOutput.innerHTML = time;
+		nameOutput.innerHTML = weatherData.location.name;
+		const iconId = weatherData.current.condition.icon.substr(
+			"//cdn.weatherapi.com/weather/64x64".length
+		);
+		icon.src = "./icons/" + iconId;
+		cloudOutput.innerHtml = weatherData.current.cloud + "%";
+		humidityOutput.innerHTML = weatherData.current.humidity + "%";
+		windOutput.innerHTML = data.current.wind_kph + "km/h";
+		// set default time of day
+		let timeofDay = "day";
+		const code = weatherData.current.condition.code;
+		if (!weatherData.current.is_day) {
+			timeofDay = "night";
+		}
+		if (code == 1000) {
+			app.style.backgroundImage = `url(./images/${timeofDay}/clear.jpg)`;
+			btn.style.background = "#e5ba92";
+			if (timeofDay == "night") {
+				btn.style.background = "#181e27";
+			}
+		} else if (
+			code == 1003 ||
+			code == 1006 ||
+			code == 1009 ||
+			code == 1030 ||
+			code == 1069 ||
+			code == 1087 ||
+			code == 1135 ||
+			code == 1273 ||
+			code == 1276 ||
+			code == 1279 ||
+			code == 1282
+		) {
+			app.style.backgroundImage = `url(./images/${timeofDay}/cloudy.jpg)`;
+			btn.style.background = "#fa6d1b";
+			if (timeofDay == "night") {
+				btn.style.background = "#181e27";
+			}
+		} else if (
+			code == 1063 ||
+			code == 1069 ||
+			code == 1072 ||
+			code == 1150 ||
+			code == 1153 ||
+			code == 1180 ||
+			code == 1183 ||
+			code == 1186 ||
+			code == 1189 ||
+			code == 1192 ||
+			code == 1195 ||
+			code == 1204 ||
+			code == 1207 ||
+			code == 1240 ||
+			code == 1243 ||
+			code == 1246 ||
+			code == 1249 ||
+			code == 1252
+		) {
+            app.style.backgroundImage = `url(./images/${timeofDay}/rainy.jpg)`;
+			btn.style.background = "#647d75";
+			if (timeofDay == "night") {
+				btn.style.background = "#325c80";
+			}
+        } else {
+            app.style.backgroundImage = `url(./images/${timeofDay}/snowy.jpg)`;
+			btn.style.background = "#4d72aa";
+			if (timeofDay == "night") {
+				btn.style.background = "#1b1b1b";
+			}
+        }
+        app.style.opacity = "1"
+	} catch (error) {
+		alert("city not found, please try again")
+        app.style.opacity = "1"
+	}
 }
+fetchWeatherData();
+app.style.opacity = "1"
