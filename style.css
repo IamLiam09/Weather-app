@@ -16,7 +16,7 @@ h4 {
 }
 .weather-app {
 	min-height: 100vh;
-	background-image: url(./images/Day/cloudy.jpg);
+	background-image: url(./images/day/cloudy.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -157,8 +157,8 @@ h4 {
 		width: 100%;
 	}
 	.container .info{
-		bottom: -550px;
-		transform: translate(0, 120%);
+		bottom: -350px;
+		transform: translate(0, 100%);
 	}
 }
 @media screen and (max-width: 500px) {
@@ -166,8 +166,8 @@ h4 {
 		font-size: 12px;
 	}
 	.container .info{
-		bottom: -500px;
-		transform: translate(0, 150%);
+		bottom: -350px;
+		transform: translate(0, 120%);
 	}
 
 }

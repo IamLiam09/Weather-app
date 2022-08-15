@@ -1,4 +1,4 @@
-const app = document.querySelector("weather-app");
+const app = document.querySelector(".weather-app");
 const temp = document.querySelector(".temp");
 const dateOutput = document.querySelector(".date");
 const timeOutput = document.querySelector(".time");
@@ -19,7 +19,7 @@ let cityInput = "London";
 cities.forEach((city) => {
 	city.addEventListener("click", (e) => {
 		// Change the default city to the clicked one
-		cityInput = e.target.innerHtml;
+		cityInput = e.target.innerHTML;
 		// function that fetches and displays all the data from the weather API
 		fetchWeatherData();
 		// Fade out the app
@@ -27,6 +27,7 @@ cities.forEach((city) => {
 	});
 });
 form.addEventListener("submit", (e) => {
+    e.preventDefault();
 	if (search.value.length === 0) {
 		alert("Please type in a city name");
 	} else {
@@ -36,30 +37,8 @@ form.addEventListener("submit", (e) => {
 		search.value = "";
 		app.style.opacity = 0;
 	}
-	e.preventDefault();
 });
-function dayOfTheWeek(day, month, year) {
-	const weekday = [
-		"Sunday",
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday",
-	];
-	return weekday(new Date(`${day}/${month}/${year}`).getDay());
-}
-// Date and time function
-function displayingDate(value) {
-	d = new Date();
-	localtime = d.getTime();
-	localOffest = d.getTimezoneOffset() * 60000;
-	utc = localtime + localOffest;
-	var citytime = utc + 1000 * value.timezone;
-	nd = new Date(citytime);
-	return nd;
-}
+
 // fetch data from the weather ap
 async function fetchWeatherData() {
 	try {
@@ -76,16 +55,16 @@ async function fetchWeatherData() {
 		const m = parseInt(date.substr(5, 2));
 		const d = parseInt(date.substr(8, 2));
 		const time = date.substr(11);
-		dateOutput.innerHTML = `${dayOfTheWeek(d, m, y)} ${d}, ${m}, ${y}}`;
-		timeOutput.innerHTML = time;
+		dateOutput.innerHTML = `${dayOfTheWeek(y, m, d)} ${d}, ${m} ${y}`;
+		timeOutput.innerHTML = time
 		nameOutput.innerHTML = weatherData.location.name;
 		const iconId = weatherData.current.condition.icon.substr(
 			"//cdn.weatherapi.com/weather/64x64".length
 		);
-		icon.src = "./icons/" + iconId;
-		cloudOutput.innerHtml = weatherData.current.cloud + "%";
+		icon.src = "./icon/" + iconId;
+		cloudOutput.innerHTML = weatherData.current.cloud + "%";
 		humidityOutput.innerHTML = weatherData.current.humidity + "%";
-		windOutput.innerHTML = data.current.wind_kph + "km/h";
+		windOutput.innerHTML = weatherData.current.wind_kph + "km/h";
 		// set default time of day
 		let timeofDay = "day";
 		const code = weatherData.current.condition.code;
@@ -148,11 +127,24 @@ async function fetchWeatherData() {
 				btn.style.background = "#1b1b1b";
 			}
         }
-        app.style.opacity = "1"
+        app.style.opacity = 1
 	} catch (error) {
 		alert("city not found, please try again")
-        app.style.opacity = "1"
+		console.table(error)
+        app.style.opacity = 1
 	}
 }
+function dayOfTheWeek(day, month, year) {
+	const weekday = [
+		"Sunday",
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+	];
+	return weekday[new Date(`${day}/${month}/${year}`).getDay()];
+}
 fetchWeatherData();
-app.style.opacity = "1"
+app.style.opacity = 1
