@@ -43,10 +43,9 @@ form.addEventListener("submit", (e) => {
 async function fetchWeatherData() {
 	try {
 		const response = await fetch(
-			`http://api.weatherapi.com/v1/current.json?key=564ae05f335a4e2aa91141544221408&q=${cityInput}&aqi=yes`
+			`http://api.weatherapi.com/v1/current.json?key=564ae05f335a4e2aa91141544221408&q=${cityInput}`, {mode: "cors"}
 		);
 		const weatherData = await response.json();
-		console.log(weatherData);
 		// add this data to the container icon in html
 		temp.innerHTML = Math.floor(weatherData.current.temp_c) + "&#176;";
 		conditionOutput.innerHTML = weatherData.current.condition.text;
