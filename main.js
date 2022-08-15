@@ -43,7 +43,7 @@ form.addEventListener("submit", (e) => {
 async function fetchWeatherData() {
 	try {
 		const response = await fetch(
-			`http://api.weatherapi.com/v1/current.json?key=564ae05f335a4e2aa91141544221408&q=${cityInput}`, {mode: "cors"}
+			`https://api.weatherapi.com/v1/current.json?key=564ae05f335a4e2aa91141544221408&q=${cityInput}`, {mode: "cors"}
 		);
 		const weatherData = await response.json();
 		// add this data to the container icon in html
